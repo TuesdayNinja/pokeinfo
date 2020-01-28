@@ -8,6 +8,10 @@ import styled from 'styled-components'
 const axios = require('axios');
 
 const LeftButton = styled(Link)`
+   opacity: ${props => {
+    if(props.pokemonsShown === 0)return 0.5;
+    else return 1;
+  }};
   color: #FFDE00;
   font-family: "Pokemon Solid";
   -webkit-text-stroke: 0.3vh #3B4CCA;
@@ -27,6 +31,10 @@ const LeftButton = styled(Link)`
   line-height: 1.2em;
 `
 const RightButton = styled(Link)`
+  opacity: ${props => {
+    if(props.filteredPokemons.length < props.pokemonsShown + 9)return 0.5;
+    else return 1;
+  }};
   color: #FFDE00;
   font-family: "Pokemon Solid";
   -webkit-text-stroke: 0.3vh #3B4CCA;
@@ -207,8 +215,17 @@ const Pokedex = () => {
         rightButtonText="Filters/ Sort"
         handleRightButtonClick={() => handleShowFilters()}
       />
-      <LeftButton onClick={handlePreviousClick}>Previous</LeftButton>
-      <RightButton onClick={handleNextClick}>Next</RightButton>
+      <LeftButton 
+        onClick={handlePreviousClick} 
+        pokemonsShown={pokemonsShown}>
+        Previous
+      </LeftButton>
+      <RightButton 
+        onClick={handleNextClick} 
+        pokemonsShown={pokemonsShown} 
+        filteredPokemons={filteredPokemons}>
+        Next
+      </RightButton>
       <Wrapper>
       <PokemonNames 
         pokemons={filteredPokemons}
