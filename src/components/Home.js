@@ -42,7 +42,7 @@ const Home = () => {
         title="Pokeinfo"
       />
       <Wrapper>
-      <Button to="/pokedex/1">National pokedex</Button>
+      <Button to="/pokedex/1/0">National pokedex</Button>
       <Button to="/choosepokedex">Choose pokedex</Button>
       </Wrapper>
     </HomeDiv>

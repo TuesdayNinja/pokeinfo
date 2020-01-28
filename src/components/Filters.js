@@ -2,11 +2,12 @@ import React, { useState, useEffect} from 'react';
 import Modal from './Modal';
 import styled from 'styled-components'
 import typeColors from '../TypeColors.js'
+import { Link } from 'react-router-dom';
 
 const axios = require('axios');
 
 
-const TypeSelector = styled.div`
+const TypeSelector = styled(Link)`
   background: #${props => typeColors.filter((color) => color.name === props.type)[0].hex};
   height: 8vh;
   width: 13vw;
@@ -16,6 +17,7 @@ const TypeSelector = styled.div`
   -webkit-text-stroke: 0.1vh black;
   margin: 1.5vh;
   text-align: center;
+  text-decoration: none;
 `
 
 const TypesWrapper = styled.div`
@@ -65,7 +67,7 @@ const SortsWrapper = styled.div`
   margin: 3vh 2vh 7vh 3.5vh ;
 `
 
-const SortButton = styled.button`
+const SortButton = styled(Link)`
   color: #FFDE00;
   font-family: "Pokemon Solid";
   -webkit-text-stroke: 0.15vw #3B4CCA;
@@ -126,7 +128,7 @@ const SortButton = styled.button`
         
     }
 
-    return <TypeSelector type={typeName} onClick={() => handleTypeClick()}>{typeName}</TypeSelector>
+    return <TypeSelector type={typeName} onClick={handleTypeClick} to={'0'}>{typeName}</TypeSelector>
   }
 
  
@@ -151,7 +153,7 @@ const SortButton = styled.button`
       setShowFilters(false)
     }
 
-    return <SortButton onClick={handleSortByNumber}>Number</SortButton>
+    return <SortButton onClick={handleSortByNumber} to={'0'}>Number</SortButton>
   };
   
   const SortByAlphabet = ({filteredPokemons, setFilteredPokemons, setShowFilters}) => {
@@ -176,7 +178,7 @@ const SortButton = styled.button`
       setFilteredPokemons(sortPokemons)
       setShowFilters(false)
     }
-    return <SortButton onClick={handleSortByAlphabet}>Alphabet</SortButton>
+    return <SortButton onClick={handleSortByAlphabet} to={'0'}>Alphabet</SortButton>
   }
 
  

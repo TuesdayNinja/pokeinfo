@@ -41,7 +41,7 @@ const ChoosePokedexDiv = styled.div`
 `
 
 
-const PokedexLink = ({num, name}) => <Button to={`pokedex/${num}`}>{name}</Button>
+const PokedexLink = ({num, name}) => <Button to={`pokedex/${num}/0`}>{name}</Button>
 
 const RenderLinks = ({pokedexes}) => {
   let subset = tail(pokedexes)

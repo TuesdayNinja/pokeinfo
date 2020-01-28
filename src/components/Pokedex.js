@@ -163,9 +163,9 @@ const Pokedex = () => {
   const [ pokemons, setPokemons ] = useState([])
   const [ filteredPokemons, setFilteredPokemons ] = useState([])
   const [ pokedexName, setPokedexName ] = useState("")
-  const [ pokemonsShown, setPokemonsShown ] = useState(0)
   const [ showFilters, setShowFilters] = useState(false);
   const { pokedexId } = useParams();
+  const pokemonsShown = parseInt(useParams().pokemonsShown);
   
 
   useEffect(() => {
@@ -187,13 +187,13 @@ const Pokedex = () => {
 
   const handleNextClick = () => {
     if(filteredPokemons.length > pokemonsShown + 9){
-      setPokemonsShown(pokemonsShown + 9)
+      return `${pokemonsShown + 9}`
     }
   }
 
   const handlePreviousClick = () => {
     if(pokemonsShown > 0){
-      setPokemonsShown(pokemonsShown - 9)
+      return `${pokemonsShown - 9}`
     }
   }
 
@@ -215,15 +215,15 @@ const Pokedex = () => {
         rightButtonText="Filters/ Sort"
         handleRightButtonClick={() => handleShowFilters()}
       />
-      <LeftButton 
-        onClick={handlePreviousClick} 
+       <LeftButton 
+        to={handlePreviousClick}
         pokemonsShown={pokemonsShown}>
         Previous
       </LeftButton>
       <RightButton 
-        onClick={handleNextClick} 
         pokemonsShown={pokemonsShown} 
-        filteredPokemons={filteredPokemons}>
+        filteredPokemons={filteredPokemons}
+        to={handleNextClick}>
         Next
       </RightButton>
       <Wrapper>

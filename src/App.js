@@ -21,7 +21,7 @@ const App = () => {
         <LastLocationProvider>
           <div>
             <Route exact path="/" render={() => <Home />} />
-            <Route path="/pokedex/:pokedexId" render={() => <Pokedex />} />
+            <Route path="/pokedex/:pokedexId/:pokemonsShown" render={() => <Pokedex />} />
             <Route path="/choosepokedex" render={() => <ChoosePokedex />} />
             <Route path="/pokemon/:pokemonId" render={() => <Pokemon />} />
           </div>
