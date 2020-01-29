@@ -24,10 +24,17 @@ const ShinyPic = styled.img`
   border-radius: 4vh;
   margin: 0 4vw;
 `
-const EvolutionPic = styled.img`
+const SmallEvolutionPic = styled.img`
   height: 10vh;
   width: auto;
   margin-top: -2.7vh;
+`
+
+const LargeEvolutionPic = styled.img`
+  height: 21vh;
+  width: auto;
+  position: absolute
+  margin: -4.5vh 0 0 3vw;
 `
 
 const Type = styled.div`
@@ -138,13 +145,13 @@ const EvolutionsColumn = styled.div`
   height: 64vh;
   width: 21vw;
 `
-const EvolutionRow = styled(Link)`
+const SmallEvolutionRow = styled(Link)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   height: 5.5vh;
   width: 13.5vw;
-  margin: 0.8vh 0.5vw;
+  margin: 0.7vh 0.5vw;
   background-color: #EE8130;
   border: 0.4vh solid #FFDE00;
   border-radius: 4vh;
@@ -152,10 +159,21 @@ const EvolutionRow = styled(Link)`
   text-decoration: none;
   color: black;
 `
-const EvolutionText = styled.p`
+const SmallEvolutionText = styled.p`
   font-size: 3.2vh
   margin: 0.6vh 0 0 0;
 `
+
+const LargeEvolutionText = styled.p`
+  font-size: 3.8vh;
+  color: #FFDE00;
+  font-family: "Pokemon Solid";
+  -webkit-text-stroke: 0.15vh #3B4CCA;
+  line-height: 1.4em;
+  position: absolute;
+  margin-top: 10vh;
+`
+
 
 const Row = styled.div`
   display: flex;
@@ -183,6 +201,17 @@ const PokemonDiv = styled.div`
   width: 100%
 `
 
+const LargeEvolutionsColumn = styled(Link)`
+  display: block;
+  height: 14vh;
+  width: 12vw;
+  margin: 1.5vh 0.5vw 1.5vh 0;
+  background-color: #EE8130;
+  border: 0.4vh solid #FFDE00;
+  border-radius: 4vh;
+  padding: 1vw;
+  text-decoration: none;
+`
 
 const FalvorText = ({pokemonInfo}) => {
 
@@ -211,6 +240,7 @@ const Stats = ({pokemonVariantInfo}) => {
 
 const Evolutions = ({evolutionUrl}) => {
   const [ evolutionChain, setEvolutionChain ] = useState(null)
+  var calc = 0
 
   useEffect(() => {
     axios({
@@ -225,14 +255,33 @@ const Evolutions = ({evolutionUrl}) => {
       });
   }, [])
 
-  const renderEvolutionChain = (chain) => {
+  const calculateEvolutionChainLenght = (chain) => {
+    calc++;
+    console.log(calc)
+    chain.evolves_to.map(calculateEvolutionChainLenght)
+    return calc;
+  }
+
+  const renderLargeEvolutionChain = (chain) => {
     return (
-      <div style={{marginLeft: "20px", textAlign: "left"}} key={chain.species.name}>
-        <EvolutionRow to={`/pokemon/${chain.species.url.split('/').slice(-2, -1)}`}>
-        <EvolutionText>{chain.species.name}</EvolutionText>
-        <EvolutionPokemonPicture pokemonApiUrl={chain.species.url}/>
-        </EvolutionRow>
-        {chain.evolves_to.map(renderEvolutionChain)}
+      <div style={{marginLeft: "1.4vw"}} key={chain.species.name}>
+        <SmallEvolutionRow to={`/pokemon/${chain.species.url.split('/').slice(-2, -1)}`}>
+        <SmallEvolutionText>{chain.species.name}</SmallEvolutionText>
+        <EvolutionPokemonPicture pictureType={'small'} pokemonApiUrl={chain.species.url}/>
+        </SmallEvolutionRow>
+        {chain.evolves_to.map(renderLargeEvolutionChain)}
+      </div>
+    )
+  }
+
+  const renderSmallEvolutionChain = (chain) => {
+    return (
+      <div style={{marginLeft: "1.6vw", textAlign: "left"}} key={chain.species.name}>
+        <LargeEvolutionsColumn to={`/pokemon/${chain.species.url.split('/').slice(-2, -1)}`}>
+        <EvolutionPokemonPicture pictureType={'large'} pokemonApiUrl={chain.species.url}/>
+        <LargeEvolutionText>{chain.species.name}</LargeEvolutionText>
+        </LargeEvolutionsColumn>
+        {chain.evolves_to.map(renderSmallEvolutionChain)}
       </div>
     )
   }
@@ -241,10 +290,13 @@ const Evolutions = ({evolutionUrl}) => {
     return null;
   }
   else if (evolutionChain.evolves_to.length === 0) {
-    return <div><br/><EvolutionText>There are no evolutions.</EvolutionText></div>
+    return <div><br/><SmallEvolutionText style={{marginLeft: "1.6vw"}}>There are no evolutions.</SmallEvolutionText></div>
+  }
+  else if(calculateEvolutionChainLenght(evolutionChain) > 3) {
+    return renderLargeEvolutionChain(evolutionChain);
   }
   else if (evolutionChain.evolves_to.length > 0){
-    return renderEvolutionChain(evolutionChain);
+    return renderSmallEvolutionChain(evolutionChain);
   }
   else return <p>There was an error.</p>
 
@@ -252,7 +304,7 @@ const Evolutions = ({evolutionUrl}) => {
 
 }
 
-const EvolutionPokemonPicture = ({pokemonApiUrl}) => {
+const EvolutionPokemonPicture = ({pictureType, pokemonApiUrl}) => {
 
   const [ pictureUrl, setPictureUrl ] = useState("")
 
@@ -280,10 +332,16 @@ const EvolutionPokemonPicture = ({pokemonApiUrl}) => {
     });
   }, [])
 
-
-    return (
-      <EvolutionPic src={pictureUrl} alt="" />
-    )
+    if(pictureType === 'small'){
+      return (
+        <SmallEvolutionPic src={pictureUrl} alt="" />
+      )
+    }
+    else if(pictureType === 'large'){
+      return(
+        <LargeEvolutionPic src={pictureUrl} alt="" />
+      )
+    }
 }
 
 const PokemonInfos = ({pokemonInfo, pokemonVariantInfo}) => {
