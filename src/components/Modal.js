@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
+import { Link } from 'react-router-dom';
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -39,7 +40,7 @@ const PlaceHolder = styled.div`
 `
 
 
-const Button = styled.button`
+const Button = styled(Link)`
     color: #FFDE00;
     font-family: "Pokemon Solid";
     -webkit-text-stroke: 0.3vh #3B4CCA;
@@ -69,17 +70,17 @@ const LeftButton = ({leftButtonText, handleLeftButtonClick}) => {
     else return null;
 }
 
-const RightButton = ({rightButtonText, handleRightButtonClick}) => {
+const RightButton = ({rightButtonText, handleRightButtonClick, rightTo}) => {
   if(rightButtonText !== undefined || handleRightButtonClick !== undefined){
       return(
-          <Button onClick={handleRightButtonClick}>{rightButtonText}</Button>
+          <Button onClick={handleRightButtonClick} to={rightTo}>{rightButtonText}</Button>
       )
   }
   else return null;
 }
 
 
-const ModalHeader = ({title, leftButtonText, handleLeftButtonClick, rightButtonText, handleRightButtonClick}) => {
+const ModalHeader = ({title, leftButtonText, handleLeftButtonClick, rightButtonText, handleRightButtonClick, rightTo}) => {
 
     return (
       <Wrapper>
@@ -94,13 +95,14 @@ const ModalHeader = ({title, leftButtonText, handleLeftButtonClick, rightButtonT
             <RightButton 
                 rightButtonText={rightButtonText}
                 handleRightButtonClick={handleRightButtonClick}
+                rightTo={rightTo}
             />
         </PlaceHolder>
       </Wrapper>
     )
   }
 
-const Modal = ({showFilters, setShowFilters, title, rightButtonText, handleRightButtonClick, children}) => {
+const Modal = ({showFilters, setShowFilters, title, rightButtonText, handleRightButtonClick, rightTo, children}) => {
 
 const handleClose = () => setShowFilters(false);
   
@@ -116,6 +118,7 @@ const handleClose = () => setShowFilters(false);
             handleLeftButtonClick={handleClose}
             rightButtonText={rightButtonText}
             handleRightButtonClick={handleRightButtonClick}
+            rightTo={rightTo}
         />
         {children}
       </ModalWrapper>

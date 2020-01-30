@@ -8,7 +8,7 @@ import styled from 'styled-components'
 const axios = require('axios');
 
 const LeftButton = styled(Link)`
-   opacity: ${props => {
+  opacity: ${props => {
     if(props.pokemonsShown === 0)return 0.5;
     else return 1;
   }};
@@ -57,7 +57,11 @@ const RightButton = styled(Link)`
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 20.5vh 29vw 0 29vw;
+  margin-top: 20.5vh
+  width: 50vw;
+  height: auto;
+  position: absolute;
+  left: 25vw
   flex-wrap: wrap;
 
 `
@@ -160,9 +164,9 @@ const PokemonNames = ({pokemons, pokemonsShown}) => {
 
 const Pokedex = () => {
 
-  const [ pokemons, setPokemons ] = useState([])
-  const [ filteredPokemons, setFilteredPokemons ] = useState([])
-  const [ pokedexName, setPokedexName ] = useState("")
+  const [ pokemons, setPokemons ] = useState([]);
+  const [ filteredPokemons, setFilteredPokemons ] = useState([]);
+  const [ pokedexName, setPokedexName ] = useState("");
   const [ showFilters, setShowFilters] = useState(false);
   const { pokedexId } = useParams();
   const pokemonsShown = parseInt(useParams().pokemonsShown);
@@ -215,7 +219,7 @@ const Pokedex = () => {
         rightButtonText="Filters/ Sort"
         handleRightButtonClick={() => handleShowFilters()}
       />
-       <LeftButton 
+      <LeftButton 
         to={handlePreviousClick}
         pokemonsShown={pokemonsShown}>
         Previous

@@ -41,8 +41,8 @@ const TypesColumn = styled.div`
 const SortsColumn = styled.div`
   display: flex;
   flex-direction: column;
-  width: 300px;
-  height: 500px;
+  width: 16vw;
+  height: 22vh;
   margin: 10px;
   justify-content: space-between;
 `
@@ -74,7 +74,7 @@ const SortButton = styled(Link)`
   font-size: 2.6vw;
   text-decoration: none;
   background-color: #CC0000;
-  border: 3px solid #FFDE00;
+  border: 0.3vh solid #FFDE00;
   width: 12.5vw;
   height: 15vh;
   border-radius: 4vh;
@@ -212,6 +212,7 @@ const SortButton = styled(Link)`
         title="Filters"
         rightButtonText="Reset"
         handleRightButtonClick={() => handleReset()}
+        rightTo={'0'}
       >
         <FiltersWrapper>
           <SortsColumn>
